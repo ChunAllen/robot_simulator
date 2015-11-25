@@ -1,18 +1,20 @@
 require 'pry'
 require 'active_model'
+require_relative 'robot_helper.rb'
 
 class Robot
 
   include ActiveModel::Model
+  include RobotHelper
 
-  attr_accessor :commands, :x, :y, :facing, :max_x, :max_y
+  attr_accessor :commands, :x, :y, :facing, :max_x, :max_y, :results
 
   def initialize(commands)
    @commands = strip_by_white_spaces(commands)
    @x, @y, @facing = @commands[1].split(',')
    @max_x, @max_y = [5,5]
+   @results = nil
   end
-
 
   def execute
    return unless is_placed?
@@ -26,40 +28,30 @@ class Robot
       when 'RIGHT'
         change_direction('RIGHT')
       when 'REPORT'
-        generate_report
-        break
-      end if self.isExists?
+        @results = generate_report
+      end
    end
-  end
-
-  def isExists?
-    @x && @y && !@facing.empty?
+   @results
   end
 
   private
 
-  def strip_by_white_spaces(commands)
-    commands.join().gsub(/\s+/m, ' ').gsub(/^\s+|\s+$/m, '').split(' ')
-  end
-
   def warning_message
     unless check_warning
-      errors.add(:warning, 'Your robot is about to fall of..')
-      false
+      compose_error_message 'Your robot is about to fall of..', errors
     end
+    errors.full_messages.first
   end
 
   def generate_report
-   p "#{@x}, #{@y}, #{@facing}"
+    warning_message || "#{@x},#{@y},#{@facing}"
   end
 
   def is_placed?
     unless @commands.first == 'PLACE'
-      @x, @y = ""
-      errors.add(:base, 'You must place the robot first into the table')
-      return false
+      compose_error_message 'You must place the robot first into the table', errors
     else
-      return true
+      true
     end
   end
 
@@ -116,7 +108,7 @@ class Robot
     when 'SOUTH'
       @y = @y-1 unless (@y-1) < 0
     when 'EAST'
-      @x = @x+1 unless (@x+1) > (@max_x -1)
+      @x = @x+1 unless (@x+1) > (@max_x - 1)
     end
   end
 
