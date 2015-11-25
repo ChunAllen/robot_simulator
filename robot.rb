@@ -38,7 +38,7 @@ class Robot
 
   def warning_message
     unless check_warning
-      compose_error_message 'Your robot is about to fall of..', errors
+      compose_error_message 'Your robot is about to fall of...', errors
     end
     errors.full_messages.first
   end
