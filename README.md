@@ -1,4 +1,8 @@
 # Robot Simulator
+
+[![Code
+Climate](https://codeclimate.com/github/ChunAllen/robot_simulator/badges/gpa.svg)](https://codeclimate.com/github/ChunAllen/robot_simulator)
+
 ### Description
 - The application is a simulation of a toy robot moving on a square tabletop,
   of dimensions 5 units x 5 units.
