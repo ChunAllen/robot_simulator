@@ -2,6 +2,8 @@
 
 [![Code
 Climate](https://codeclimate.com/github/ChunAllen/robot_simulator/badges/gpa.svg)](https://codeclimate.com/github/ChunAllen/robot_simulator)
+[![Test
+Coverage](https://codeclimate.com/github/ChunAllen/robot_simulator/badges/coverage.svg)](https://codeclimate.com/github/ChunAllen/robot_simulator/coverage)
 
 ### Description
 - The application is a simulation of a toy robot moving on a square tabletop,
